@@ -20,4 +20,4 @@ jobs:
       - name: Build
         run: msbuild /p:Configuration=Release GithubActions.sln
       - name: Run Unit Tests
-        run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.trx"
+        run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx" --logger "console;verbosity=detailed"
