@@ -3,21 +3,21 @@ name: 'Run App AbdoulAzizDiop'
 on: [push, pull_request]
 
 jobs:
-  check-bats-version:
+  build-and-test:
     runs-on: ubuntu-22.04
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-dotnet@v1
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install .NET 9
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '9.0.201'
       - name: Install OpenSSL 3
         run: sudo apt-get update && sudo apt-get install -y libssl3
-      - uses: nuget/setup-nuget@v1
-      - name: Nuget Restore
-        run: nuget restore GithubActions.sln
-      - name: Install dependencies
+      - name: NuGet Restore
         run: dotnet restore GithubActions.sln
       - name: Build
-        run: msbuild /p:Configuration=Release GithubActions.sln
+        run: dotnet build --configuration Release GithubActions.sln
       - name: Run Unit Tests
         run: dotnet test --configuration Release --logger trx
