@@ -23,4 +23,7 @@ jobs:
         run: |
           mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe \
           ./Tests/bin/Release/Tests.dll \
-          --labels=All 
+          --noheader \          # Removes the NUnit banner
+          --labels=All \        # Shows test names
+          --result=TestResults.xml \  # Generates report
+          && cat TestResults.xml | grep -E "<test-case|</test-case>"  # Shows pass/fail status
