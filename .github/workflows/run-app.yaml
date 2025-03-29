@@ -19,35 +19,8 @@ jobs:
         run: dotnet restore GithubActions.sln
       - name: Build
         run: msbuild /p:Configuration=Release GithubActions.sln
-      - name: Debug Solution Structure
+      - name: Run Unit Tests
         run: |
-          cat GithubActions.sln | grep "Tests.csproj"  # Check if tests are in solution
-      - name: Build
-        run: |
-          msbuild /p:Configuration=Release ./Tests/Tests.csproj  # Build test project directly
-          ls ./Tests/bin/Release  # Verify DLL exists
-          - name: Install NUnit Packages
-        run: |
-          nuget restore ./Tests/packages.config -PackagesDirectory ./packages
-          nuget install NUnit.Console -Version 3.12.0 -OutputDirectory ./packages
-      - name: Build Tests
-        run: |
-          # Restore test project packages
-          nuget restore ./Tests/packages.config -PackagesDirectory ./packages
-          
-          # Build ONLY the test project
-          msbuild ./Tests/Tests.csproj /p:Configuration=Release
-          
-          # Verify DLL was created
-          if [ ! -f "./Tests/bin/Release/Tests.dll" ]; then
-            echo "::error::Tests.dll not found! Build output:"
-            ls -R ./Tests/bin
-            exit 1
-          fi
-
-      - name: Run Tests
-        run: |
-          mono ./packages/NUnit.ConsoleRunner.3.*/tools/nunit3-console.exe \
-            ./Tests/bin/Release/Tests.dll \
-            --noheader \
-            --labels=All
+          mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe \
+          ./Tests/bin/Release/Tests.dll \
+          --labels=All 
