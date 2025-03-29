@@ -24,3 +24,13 @@ jobs:
           mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe \
           ./Tests/bin/Release/Tests.dll \
           --labels=All 
+      - name: Run Tests with XML Output
+        run: |
+          mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe \
+          ./Tests/bin/Release/Tests.dll \
+          --result=TestResults.xml
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test Results
+          path: TestResults.xml
