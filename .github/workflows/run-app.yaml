@@ -24,7 +24,3 @@ jobs:
           mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe \
           ./Tests/bin/Release/Tests.dll \
           --labels=All 
-          --result=TestResults.xml
-          --teamcity
-          --trace=Verbose
-          --out=TestOutput.txt
