@@ -4,16 +4,14 @@ on: [push, pull_request]
 
 jobs:
   check-bats-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.301'
-      - name: Install Mono
-        run: sudo apt-get update && sudo apt-get install -y mono-complete
-      - name: Install OpenSSL Compatibility Libraries
-        run: sudo apt-get install -y libssl3 libssl-dev
+          dotnet-version: '9.0.201'
+      - name: Install OpenSSL 3
+        run: sudo apt-get update && sudo apt-get install -y libssl3
       - uses: nuget/setup-nuget@v1
       - name: Nuget Restore
         run: nuget restore GithubActions.sln
@@ -22,4 +20,4 @@ jobs:
       - name: Build
         run: msbuild /p:Configuration=Release GithubActions.sln
       - name: Run Unit Tests
-        run: mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Tests/bin/Release/Tests.dll
+        run: dotnet test --configuration Release --logger trx
