@@ -26,7 +26,7 @@ jobs:
         run: |
           msbuild /p:Configuration=Release ./Tests/Tests.csproj  # Build test project directly
           ls ./Tests/bin/Release  # Verify DLL exists
-          - name: Install NUnit Packages
+          - name: Install NUnit 
         run: |
           nuget restore ./Tests/packages.config -PackagesDirectory ./packages
           nuget install NUnit.Console -Version 3.12.0 -OutputDirectory ./packages
