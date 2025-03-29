@@ -24,4 +24,4 @@ jobs:
           mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe \
           ./Tests/bin/Release/Tests.dll \
           --labels=All 
-          --teamcity
+          --result=TestResults.xml
