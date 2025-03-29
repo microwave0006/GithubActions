@@ -10,6 +10,10 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.301'
+      - name: Install Mono
+        run: sudo apt-get update && sudo apt-get install -y mono-complete
+      - name: Install OpenSSL
+        run: sudo apt-get install -y libssl3
       - uses: nuget/setup-nuget@v1
       - name: Nuget Restore
         run: nuget restore GithubActions.sln
