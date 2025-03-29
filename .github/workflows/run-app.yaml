@@ -18,6 +18,6 @@ jobs:
       - name: Install dependencies
         run: dotnet restore GithubActions.sln
       - name: Build
-        run: build /p:Configuration=Release GithubActions.sln
+        run: msbuild /p:Configuration=Release GithubActions.sln
       - name: Run Unit Tests
         run: dotnet test --configuration Release --logger trx
